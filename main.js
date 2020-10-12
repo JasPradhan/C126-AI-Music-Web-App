@@ -1,3 +1,7 @@
+leftSong="";
+
+leftScore=0;
+
 song_1="";
 song_2="";
 
@@ -23,6 +27,21 @@ poseNet.on('pose',gotPoses);
 
 function draw(){
 image(video, 0, 0, 600, 500);
+
+song_1.isPlaying()
+
+fill("#3cff00");
+strokeWeight(2);
+stroke("#ff0000");
+
+if(score_leftWrist>0.2){
+        circle(leftWristX ,leftWristY ,20);
+        song_2.stop()
+        if(song_1==false){
+            song_1.play()
+            document.getElementById("name_of_song").innerHTML="Song: Harry Potter Theme Song"
+        }
+    }
 }
 
 
@@ -35,6 +54,8 @@ function gotPoses(results){
         console.log(results);
         leftWristX=results[0].pose.leftWrist.x;
         leftWristY=results[0].pose.leftWrist.y;
+
+        leftScore=results[0].pose.keypoints[9].score;
 
         rightWristX=results[0].pose.rightWrist.x;
         rightWristY=results[0].pose.rightWrist.y;
